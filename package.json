@@ -1,0 +1,17 @@
+{
+  "name": "vue-router-perf-bench",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vue": "latest",
+    "vue-router-3": "npm:vue-router@3",
+    "vue-router-4": "npm:vue-router@^4.2.5"
+  }
+}

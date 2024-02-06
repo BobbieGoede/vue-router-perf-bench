@@ -1,15 +1,24 @@
 import VueRouter3 from "vue-router-3";
 import * as VueRouter4 from "vue-router-4";
 import { routes } from "./routes.mjs";
+import v8Profiler from "v8-profiler-next";
+import fs from "fs";
 
+const profileName = "router-profile";
 const iterationsArray = [10, 100, 200, 400, 1000];
 const results = {
   RouterV3: {},
   RouterV4: {},
 };
 
+if (process.env.PROFILER) {
+  console.log("Will generate cpu profile!");
+  v8Profiler.setGenerateType(1);
+  v8Profiler.startProfiling(profileName, true);
+}
+
 for (const iterations of iterationsArray) {
-  console.log(`Running ${iterations} creations...`);
+  console.log(`Running ${iterations} router creations...`);
 
   const v3 = performance.now();
   for (let i = 0; i < iterations; i++) {
@@ -30,3 +39,11 @@ for (const iterations of iterationsArray) {
 }
 
 console.table(results);
+
+if (process.env.PROFILER) {
+  const profile = v8Profiler.stopProfiling(profileName);
+  profile.export(function (error, result) {
+    fs.writeFileSync(`${profileName}.cpuprofile`, result);
+    profile.delete();
+  });
+}

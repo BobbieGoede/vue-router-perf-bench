@@ -1,4 +1,5 @@
 ### How to run
 
-* Install with `pnpm install`
-* Run with `pnpm start`
+* `pnpm install`
+* `pnpm start` - Runs router creations and logs result
+* `pnpm start:profiler` - Runs router creations and logs result and also generates cpu profile

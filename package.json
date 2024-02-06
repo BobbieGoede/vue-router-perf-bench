@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.mjs"
+    "start": "node index.mjs",
+    "start:profiler": "PROFILER=1 node index.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "v8-profiler-next": "^1.10.0",
     "vue": "latest",
     "vue-router-3": "npm:vue-router@3",
     "vue-router-4": "npm:vue-router@^4.2.5"

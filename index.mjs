@@ -9,7 +9,7 @@ const results = {
 };
 
 for (const iterations of iterationsArray) {
-  console.log(`Running ${iterations} creations (for both versions)...`);
+  console.log(`Running ${iterations} creations...`);
 
   const v3 = performance.now();
   for (let i = 0; i < iterations; i++) {
@@ -26,7 +26,6 @@ for (const iterations of iterationsArray) {
       routes,
     });
   }
-
   results.RouterV4[iterations] = (performance.now() - v4).toFixed(2) + "ms";
 }
 

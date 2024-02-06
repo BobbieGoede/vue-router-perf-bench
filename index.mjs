@@ -29,5 +29,4 @@ for (const iterations of iterationsArray) {
   results.RouterV4[iterations] = (performance.now() - v4).toFixed(2) + "ms";
 }
 
-console.clear();
 console.table(results);

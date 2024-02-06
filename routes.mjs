@@ -1,29 +1,33 @@
-const base = 36;
-const routes = [];
+function createRoutes(multiplier = 10) {
+  const base = 36;
+  const routes = [];
 
-// ##########
-// edit this instead of PATH_MULTIPLIER in other reproductions
-const dirCount = 100;
-// ##########
+  // ##########
+  // edit this instead of PATH_MULTIPLIER in other reproductions
+  const dirCount = multiplier;
+  // ##########
 
-const fileCount = 10;
+  const fileCount = 10;
 
-for (let i = 0; i < dirCount; i++) {
-  const dirStr = i.toString(base);
-  routes.push({
-    name: `${dirStr}`,
-    path: `/${dirStr}/`,
-    // file: pages['./pages/Home.vue'],
-  });
-
-  for (let j = 0; j < fileCount; j++) {
-    const fileStr = j.toString(base);
+  for (let i = 0; i < dirCount; i++) {
+    const dirStr = i.toString(base);
     routes.push({
-      name: `${dirStr}-${fileStr}`,
-      path: `/${dirStr}/${fileStr}/`,
+      name: `${dirStr}`,
+      path: `/${dirStr}/`,
       // file: pages['./pages/Home.vue'],
     });
+
+    for (let j = 0; j < fileCount; j++) {
+      const fileStr = j.toString(base);
+      routes.push({
+        name: `${dirStr}-${fileStr}`,
+        path: `/${dirStr}/${fileStr}/`,
+        // file: pages['./pages/Home.vue'],
+      });
+    }
+    4;
   }
+  return routes;
 }
 
-export { routes };
+export { createRoutes };

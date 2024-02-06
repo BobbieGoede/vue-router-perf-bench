@@ -1,11 +1,12 @@
 import VueRouter3 from "vue-router-3";
 import * as VueRouter4 from "vue-router-4";
-import { routes } from "./routes.mjs";
+import { createRoutes } from "./routes.mjs";
 import v8Profiler from "v8-profiler-next";
 import fs from "fs";
 
 const profileName = "router-profile";
-const iterationsArray = [10, 100, 200, 400, 1000];
+const iterations = 100;
+const multiplierArray = [1, 10, 50, 100, 200];
 const results = {
   RouterV3: {},
   RouterV4: {},
@@ -17,8 +18,11 @@ if (process.env.PROFILER) {
   v8Profiler.startProfiling(profileName, true);
 }
 
-for (const iterations of iterationsArray) {
-  console.log(`Running ${iterations} router creations...`);
+for (const multiplier of multiplierArray) {
+  const routes = createRoutes(multiplier);
+  console.log(
+    `Running ${iterations} router creations with ${routes.length} routes...`
+  );
 
   const v3 = performance.now();
   for (let i = 0; i < iterations; i++) {
@@ -26,7 +30,7 @@ for (const iterations of iterationsArray) {
       routes,
     });
   }
-  results.RouterV3[iterations] = (performance.now() - v3).toFixed(2) + "ms";
+  results.RouterV3[routes.length] = (performance.now() - v3).toFixed(2) + "ms";
 
   const v4 = performance.now();
   for (let i = 0; i < iterations; i++) {
@@ -35,7 +39,7 @@ for (const iterations of iterationsArray) {
       routes,
     });
   }
-  results.RouterV4[iterations] = (performance.now() - v4).toFixed(2) + "ms";
+  results.RouterV4[routes.length] = (performance.now() - v4).toFixed(2) + "ms";
 }
 
 console.table(results);

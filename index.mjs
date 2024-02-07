@@ -10,6 +10,7 @@ const multiplierArray = [1, 10, 50, 100, 200];
 const results = {
   RouterV3: {},
   RouterV4: {},
+  RouterV4Cached: {},
 };
 
 if (process.env.PROFILER) {
@@ -17,6 +18,12 @@ if (process.env.PROFILER) {
   v8Profiler.setGenerateType(1);
   v8Profiler.startProfiling(profileName, true);
 }
+
+const cache = {
+  RouterV3: {},
+  RouterV4: {},
+  RouterV4Cached: {},
+};
 
 for (const multiplier of multiplierArray) {
   const routes = createRoutes(multiplier);
@@ -40,6 +47,26 @@ for (const multiplier of multiplierArray) {
     });
   }
   results.RouterV4[routes.length] = (performance.now() - v4).toFixed(2) + "ms";
+
+  const precompiledRouter = VueRouter4.createRouter({
+    history: VueRouter4.createMemoryHistory(),
+    routes,
+    sortCache: cache.RouterV4Cached[multiplier],
+  });
+  cache.RouterV4Cached[multiplier] ??= VueRouter4.createSortCache(
+    precompiledRouter.getRoutes()
+  );
+
+  const v4Cached = performance.now();
+  for (let i = 0; i < iterations; i++) {
+    VueRouter4.createRouter({
+      history: VueRouter4.createMemoryHistory(),
+      routes,
+      sortCache: cache.RouterV4Cached[multiplier],
+    });
+  }
+  results.RouterV4Cached[routes.length] =
+    (performance.now() - v4Cached).toFixed(2) + "ms";
 }
 
 console.table(results);

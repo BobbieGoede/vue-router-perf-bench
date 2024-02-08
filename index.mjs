@@ -53,7 +53,7 @@ for (const multiplier of multiplierArray) {
     routes,
     sortCache: cache.RouterV4Cached[multiplier],
   });
-  cache.RouterV4Cached[multiplier] ??= VueRouter4.createSortCache(
+  cache.RouterV4Cached[multiplier] ??= VueRouter4.createRouterMatcherSortCache(
     precompiledRouter.getRoutes()
   );
 

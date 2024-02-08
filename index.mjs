@@ -51,7 +51,6 @@ for (const multiplier of multiplierArray) {
   const precompiledRouter = VueRouter4.createRouter({
     history: VueRouter4.createMemoryHistory(),
     routes,
-    sortCache: cache.RouterV4Cached[multiplier],
   });
   cache.RouterV4Cached[multiplier] ??= VueRouter4.createRouterMatcherSortCache(
     precompiledRouter.getRoutes()
